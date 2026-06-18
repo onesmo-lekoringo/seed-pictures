@@ -9,13 +9,37 @@ const SiteFooter = () => {
         </div>
 
         <div className="flex items-center gap-5">
-          <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Instagram">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="text-muted-foreground hover:text-primary transition-colors"
+            aria-label="Instagram"
+          >
             <Instagram className="w-5 h-5" />
           </a>
-          <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="YouTube">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="text-muted-foreground hover:text-primary transition-colors"
+            aria-label="YouTube"
+          >
             <Youtube className="w-5 h-5" />
           </a>
-          <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="text-muted-foreground hover:text-primary transition-colors"
+            aria-label="Twitter"
+          >
             <Twitter className="w-5 h-5" />
           </a>
         </div>

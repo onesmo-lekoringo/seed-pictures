@@ -48,7 +48,7 @@ const Contact = () => {
 
     // 2. Send email notification via Resend (API server)
     try {
-      const emailRes = await fetch("http://localhost:3001/api/send-email", {
+      const emailRes = await fetch("/.netlify/functions/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

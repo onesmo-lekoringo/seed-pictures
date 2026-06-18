@@ -1,6 +1,5 @@
 import Hero from "@/components/Hero";
 import Portfolio from "@/components/Portfolio";
-import Process from "@/components/Process";
 import Events from "@/components/Events";
 import SiteFooter from "@/components/SiteFooter";
 import PillNav from "@/components/PillNav";
@@ -11,7 +10,6 @@ const Index = () => {
       <PillNav />
       <Hero />
       <Portfolio />
-      <Process />
       <Events />
       <SiteFooter />
     </main>
