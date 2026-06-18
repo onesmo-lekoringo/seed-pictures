@@ -141,7 +141,8 @@ const Hero = () => {
           className="mt-10"
         >
           <a
-            href="#about"
+            href="/contact"
+            onClick={(e) => { e.preventDefault(); handleNav("/contact"); }}
             className="inline-flex items-center px-8 py-4 rounded-full bg-primary text-primary-foreground font-medium text-sm tracking-wide hover:opacity-90 transition-opacity"
           >
             Begin Journey

@@ -1,27 +1,20 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import sarahImg from "@/assets/sarah-johnson.jpg";
-import marcusImg from "@/assets/marcus-chen.jpg";
-import davidImg from "@/assets/david-rodriguez.jpg";
+import kephasImg from "@/assets/kephas.jpg";
+import danielImg from "@/assets/daniel.jpg";
 
 const team = [
   {
-    name: "Sarah Johnson",
-    role: "Founder & Creative Director",
-    bio: "Award-winning filmmaker with 15 years of experience in environmental documentaries. Sarah's vision drives every story we tell.",
-    image: sarahImg,
+    name: "Samwel Kephas",
+    role: "Founder",
+    bio: "Samwel Kephas is a writer, director, producer, and the Founder of Seed Pictures. His work spans documentary and narrative filmmaking, with a distinct focus on stories that explore social change and human experience. Through Seed Pictures, he is building a dynamic creative platform that produces compelling films, empowers emerging talent through film training and mentorship, and contributes to the growth of the Tanzanian film industry.",
+    image: kephasImg,
   },
   {
-    name: "Marcus Chen",
-    role: "Head of Production",
-    bio: "Technical visionary who brings stories to life with cutting-edge yet sustainable filmmaking techniques and meticulous craft.",
-    image: marcusImg,
-  },
-  {
-    name: "David Rodriguez",
-    role: "Community Outreach Director",
-    bio: "Passionate advocate connecting films with communities worldwide, ensuring our stories create meaningful, lasting impact.",
-    image: davidImg,
+    name: "Daniel Samwel",
+    role: "Filmmaker & Entrepreneur",
+    bio: "Daniel Samwel is a Tanzanian filmmaker and entrepreneur. He tells stories through narratives that explore themes of justice, human connection, and societal transformation. His work includes NADUPA, a narrative film that confronts women's rights to property ownership and the practice of widow inheritance, reflecting a rare combination of artistic depth and lived experience to shape communities.",
+    image: danielImg,
   },
 ];
 
@@ -44,7 +37,7 @@ const Team = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {team.map((member, i) => (
             <motion.div
               key={member.name}

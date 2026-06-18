@@ -5,36 +5,29 @@ import { Link } from "react-router-dom";
 import PillNav from "@/components/PillNav";
 import SiteFooter from "@/components/SiteFooter";
 import aboutHeroImg from "@/assets/about-hero-team.png";
-import sarahImg from "@/assets/sarah-johnson.jpg";
-import marcusImg from "@/assets/marcus-chen.jpg";
-import davidImg from "@/assets/david-rodriguez.jpg";
+import whoWeAreImg from "@/assets/who-we-are.jpg";
+import kephasImg from "@/assets/kephas.jpg";
+import danielImg from "@/assets/daniel.jpg";
 
 const coreValues = [
-  "Authentic storytelling that sparks change",
-  "Sustainable & ethical production practices",
-  "Cultural sensitivity & community collaboration",
-  "Innovation in documentary filmmaking",
-  "Transparency & creative integrity",
+  "Integrity",
+  "Access",
+  "Community",
+  "Hard work",
 ];
 
 const team = [
   {
-    name: "Sarah Johnson",
-    role: "Founder & Creative Director",
-    bio: "Award-winning filmmaker with 15 years of experience in environmental documentaries. Sarah's vision drives every story we tell.",
-    image: sarahImg,
+    name: "Samwel Kephas",
+    role: "Founder",
+    bio: "Samwel Kephas is a writer, director, producer, and the Founder of Seed Pictures. His work spans documentary and narrative filmmaking, with a distinct focus on stories that explore social change and human experience. Through Seed Pictures, he is building a dynamic creative platform that produces compelling films, empowers emerging talent through film training and mentorship, and contributes to the growth of the Tanzanian film industry.",
+    image: kephasImg,
   },
   {
-    name: "Marcus Chen",
-    role: "Head of Production",
-    bio: "Technical visionary who brings stories to life with cutting-edge yet sustainable filmmaking techniques and meticulous craft.",
-    image: marcusImg,
-  },
-  {
-    name: "David Rodriguez",
-    role: "Community Outreach Director",
-    bio: "Passionate advocate connecting films with communities worldwide, ensuring our stories create meaningful, lasting impact.",
-    image: davidImg,
+    name: "Daniel Samwel",
+    role: "Filmmaker & Entrepreneur",
+    bio: "Daniel Samwel is a Tanzanian filmmaker and entrepreneur. He tells stories through narratives that explore themes of justice, human connection, and societal transformation. His work includes NADUPA, a narrative film that confronts women's rights to property ownership and the practice of widow inheritance, reflecting a rare combination of artistic depth and lived experience to shape communities.",
+    image: danielImg,
   },
 ];
 
@@ -84,14 +77,15 @@ const AboutUs = () => {
                 Who We Are
               </h1>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Seed Pictures is a creative hub focused on innovative storytelling and sustainable
-                production practices that push the boundaries of documentary filmmaking.
+                Seed Pictures is a fully integrated production company based in Arusha, Tanzania, 
+                which caters to all aspects of film, documentary, and television production.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Founded with a belief that great stories can change the world, we bring together
-                talented filmmakers, writers, and producers who share a passion for impactful cinema.
-                Every project we take on is rooted in authenticity, cultural sensitivity, and a deep
-                respect for the communities whose stories we help tell.
+                Driven by a vision to expand opportunities in the film industry, Seed Pictures is 
+                committed to telling quality, unique, and creative stories while promoting community 
+                ownership and capacity building. Through collaboration, training, and innovative 
+                production, we aim to contribute to a more inclusive and decentralized Tanzanian 
+                film landscape.
               </p>
             </motion.div>
 
@@ -105,7 +99,7 @@ const AboutUs = () => {
             >
               <div className="rounded-2xl overflow-hidden border border-border shadow-2xl shadow-background/60">
                 <img
-                  src={aboutHeroImg}
+                  src={whoWeAreImg}
                   alt="Seed Pictures production crew on set"
                   className="w-full h-auto object-cover"
                 />
@@ -150,30 +144,8 @@ const AboutUs = () => {
                     Our Vision
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    A world where storytelling bridges cultures, inspires action, and drives
-                    sustainable change — one film at a time. We envision media as a catalyst for
-                    empathy and understanding.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Mission */}
-              <motion.div
-                initial="hidden"
-                animate={valuesInView ? "visible" : "hidden"}
-                variants={fadeUp}
-                custom={1}
-                className="flex gap-6"
-              >
-                <div className="w-1 shrink-0 rounded-full bg-accent" />
-                <div>
-                  <h2 className="font-display text-2xl md:text-3xl font-bold text-primary mb-4">
-                    Our Mission
-                  </h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    To create thought-provoking documentaries and narrative films that highlight
-                    environmental and social issues, fostering a deeper connection between humanity
-                    and the natural world.
+                    To build a decentralized Tanzanian film industry by empowering filmmakers and 
+                    storytelling communities across the country.
                   </p>
                 </div>
               </motion.div>
@@ -219,13 +191,13 @@ const AboutUs = () => {
             custom={0}
             className="text-center mb-16"
           >
-            <p className="text-sm uppercase tracking-[0.2em] text-accent mb-4">Team</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-accent mb-4">Our Team</p>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-primary">
-              Meet the Team
+              Biographies
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {team.map((member, i) => (
               <motion.div
                 key={member.name}
