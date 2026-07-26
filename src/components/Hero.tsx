@@ -5,13 +5,17 @@ import { useState } from "react";
 
 const navLinks = [
   { label: "Home", href: "#" },
-  { label: "About Us", href: "/about" },
   { label: "Projects", href: "#portfolio" },
-  { label: "Gallery", href: "/gallery" },
+  { label: "The Academy", href: "/academy" },
+  { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
-const Hero = () => {
+interface HeroProps {
+  onVideoLoaded?: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onVideoLoaded }) => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -29,21 +33,29 @@ const Hero = () => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Video Background */}
-      <video
+      <motion.video
         autoPlay
         muted
         loop
         playsInline
+        onCanPlayThrough={onVideoLoaded}
+        onLoadedData={onVideoLoaded}
+        initial={{ filter: "blur(20px)" }}
+        animate={{ filter: "blur(0px)" }}
+        transition={{ duration: 2.5, ease: "easeOut" }}
         className="absolute inset-0 w-full h-full object-cover"
       >
         <source
           src="/child.mp4"
           type="video/mp4"
         />
-      </video>
+      </motion.video>
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-background/60" />
+      {/* Neutral dark overlay to keep video clear and text legible */}
+      <div className="absolute inset-0 bg-black/45 bg-gradient-to-t from-black/70 via-transparent to-black/60" />
+
+      {/* Ambient sapphire blue glow at the far bottom-right corner */}
+      <div className="absolute -right-20 -bottom-20 w-[45rem] h-[45rem] rounded-full bg-blue-500/15 blur-[160px] pointer-events-none mix-blend-screen" />
 
       {/* Top Navigation */}
       <motion.nav
@@ -52,8 +64,8 @@ const Hero = () => {
         transition={{ duration: 0.6, delay: 0.3 }}
         className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-12 py-6"
       >
-        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} className="font-display text-lg font-bold text-primary tracking-wide">
-          Seed Pictures
+        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} className="flex items-center">
+          <img src="/Horizontal-Main-Logo.png" alt="Seed Pictures Logo" className="h-10 md:h-12 w-auto object-contain" />
         </a>
 
         {/* Desktop links */}
@@ -63,7 +75,7 @@ const Hero = () => {
               key={link.label}
               href={link.href}
               onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
-              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
+              className="text-sm font-medium text-white/70 hover:text-[#C5A028] transition-colors duration-200"
             >
               {link.label}
             </a>
@@ -73,7 +85,7 @@ const Hero = () => {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-primary"
+          className="md:hidden p-2 text-[#C5A028]"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -88,11 +100,11 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-30 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 z-30 bg-[#0B1838]/97 backdrop-blur-md flex flex-col items-center justify-center gap-8"
           >
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-6 right-6 p-2 text-primary"
+              className="absolute top-6 right-6 p-2 text-[#C5A028]"
               aria-label="Close menu"
             >
               <X className="w-6 h-6" />
@@ -105,7 +117,7 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
                 onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
-                className="font-display text-2xl font-semibold text-primary hover:text-accent transition-colors"
+                className="font-display text-2xl font-semibold text-white hover:text-[#C5A028] transition-colors"
               >
                 {link.label}
               </motion.a>
@@ -116,36 +128,39 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
+
+
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-primary glow-text leading-[1.05]"
+          transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.05]"
         >
-          Empowering Stories Through Film
+          Stories at the Heart<br />
+          of Community
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
-        >
-          Creating impactful films that inspire change.
-        </motion.p>
+
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="mt-10"
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          className="mt-10 flex items-center justify-center gap-4 flex-wrap"
         >
           <a
             href="/contact"
             onClick={(e) => { e.preventDefault(); handleNav("/contact"); }}
-            className="inline-flex items-center px-8 py-4 rounded-full bg-primary text-primary-foreground font-medium text-sm tracking-wide hover:opacity-90 transition-opacity"
+            className="inline-flex items-center px-8 py-4 rounded-full bg-[#C5A028] text-[#0B1838] font-semibold text-sm tracking-wide hover:bg-[#C5A028]/90 transition-all duration-200 shadow-lg shadow-[#C5A028]/20"
           >
             Begin Journey
+          </a>
+          <a
+            href="#portfolio"
+            onClick={(e) => { e.preventDefault(); handleNav("#portfolio"); }}
+            className="inline-flex items-center px-8 py-4 rounded-full border border-white/30 text-white font-medium text-sm tracking-wide hover:border-[#C5A028] hover:text-[#C5A028] transition-all duration-200"
+          >
+            View Our Films
           </a>
         </motion.div>
       </div>

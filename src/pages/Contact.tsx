@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import PillNav from "@/components/PillNav";
+import TopHeaderNav from "@/components/TopHeaderNav";
 import SiteFooter from "@/components/SiteFooter";
 
 const inquirySchema = z.object({
@@ -33,20 +33,8 @@ const Contact = () => {
     setErrors({});
     setSubmitting(true);
 
-    // 1. Save to Supabase database
-    const { error } = await supabase.from("contact_submissions").insert({
-      name: result.data.name,
-      email: result.data.email,
-      details: result.data.details,
-    });
-
-    if (error) {
-      setSubmitting(false);
-      toast.error("Failed to send inquiry. Please try again.");
-      return;
-    }
-
-    // 2. Send email notification via Resend (API server)
+    // 2. Send email notification via SMTP (Netlify function)
+    let emailSent = false;
     try {
       const emailRes = await fetch("/.netlify/functions/send-email", {
         method: "POST",
@@ -58,7 +46,9 @@ const Contact = () => {
         }),
       });
 
-      if (!emailRes.ok) {
+      if (emailRes.ok) {
+        emailSent = true;
+      } else {
         console.warn("Email notification failed:", await emailRes.text());
       }
     } catch (emailErr) {
@@ -66,35 +56,34 @@ const Contact = () => {
     }
 
     setSubmitting(false);
-    toast.success("Inquiry sent successfully!");
-    setForm({ name: "", email: "", details: "" });
+
+    if (emailSent) {
+      toast.success("Inquiry sent successfully!");
+      setForm({ name: "", email: "", details: "" });
+    } else {
+      toast.error("Failed to send email. Please try again.");
+    }
   };
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background relative">
+      <TopHeaderNav />
       <PillNav />
 
       {/* Hero Banner */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1920&q=80"
+          src="/contact.jpg"
           alt="Contact hero"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/60" />
-
-        {/* Top nav */}
-        <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-12 py-6">
-          <Link to="/" className="font-display text-lg font-bold text-primary tracking-wide">
-            Seed Pictures
-          </Link>
-        </div>
+        <div className="absolute inset-0 bg-[#0B1838]/75" />
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-primary tracking-tight uppercase px-4 text-center"
+          className="relative z-10 font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight uppercase px-4 text-center"
         >
           Just a Click Away
         </motion.h1>
@@ -108,7 +97,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-display text-3xl md:text-5xl font-bold text-muted-foreground uppercase tracking-wide"
+            className="font-display text-3xl md:text-5xl font-bold text-[#C5A028] uppercase tracking-wide"
           >
             Let's Connect
           </motion.h2>
@@ -122,18 +111,18 @@ const Contact = () => {
           >
             <a
               href="mailto:info@seedpictures.com"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-lg"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#C5A028] transition-colors text-lg"
             >
               <Mail className="w-4 h-4" />
               info@seedpictures.com
               <ArrowUpRight className="w-4 h-4" />
             </a>
             <a
-              href="tel:+1234567890"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-lg"
+              href="tel:0695760822"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#C5A028] transition-colors text-lg"
             >
               <Phone className="w-4 h-4" />
-              (123) 456 7890
+              0695760822
               <ArrowUpRight className="w-4 h-4" />
             </a>
           </motion.div>
@@ -146,15 +135,22 @@ const Contact = () => {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="mt-6 flex items-center justify-center gap-6"
           >
-            {["Twitter", "Instagram", "Facebook"].map((platform) => (
-              <a
-                key={platform}
-                href="#"
-                className="text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                {platform}
-              </a>
-            ))}
+            <a
+              href="https://www.instagram.com/seedpictures.tz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-muted-foreground hover:text-[#C5A028] transition-colors"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://youtube.com/@seedpictures-q4b"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-muted-foreground hover:text-[#C5A028] transition-colors"
+            >
+              YouTube
+            </a>
           </motion.div>
         </div>
       </section>
@@ -168,7 +164,7 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="max-w-2xl mx-auto"
         >
-          <h3 className="font-display text-2xl font-bold text-primary text-center mb-10">
+          <h3 className="font-display text-2xl font-bold text-white text-center mb-10">
             Project Inquiry
           </h3>
 
@@ -179,7 +175,7 @@ const Contact = () => {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full bg-transparent border-b border-border py-4 text-primary placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full bg-transparent border-b border-border py-4 text-white placeholder:text-muted-foreground focus:outline-none focus:border-[#C5A028] transition-colors"
               />
               {errors.name && <p className="text-destructive text-sm mt-1">{errors.name}</p>}
             </div>
@@ -189,7 +185,7 @@ const Contact = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full bg-transparent border-b border-border py-4 text-primary placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full bg-transparent border-b border-border py-4 text-white placeholder:text-muted-foreground focus:outline-none focus:border-[#C5A028] transition-colors"
               />
               {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
             </div>
@@ -199,7 +195,7 @@ const Contact = () => {
                 rows={4}
                 value={form.details}
                 onChange={(e) => setForm({ ...form, details: e.target.value })}
-                className="w-full bg-transparent border-b border-border py-4 text-primary placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                className="w-full bg-transparent border-b border-border py-4 text-white placeholder:text-muted-foreground focus:outline-none focus:border-[#C5A028] transition-colors resize-none"
               />
               {errors.details && <p className="text-destructive text-sm mt-1">{errors.details}</p>}
             </div>
@@ -207,7 +203,7 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex items-center px-10 py-4 rounded-full bg-primary text-primary-foreground font-medium text-sm tracking-wide hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="inline-flex items-center px-10 py-4 rounded-full bg-[#C5A028] text-[#0B1838] font-semibold text-sm tracking-wide hover:bg-[#C5A028]/90 transition-all duration-200 shadow-lg shadow-[#C5A028]/20 disabled:opacity-50"
               >
                 {submitting ? "Sending…" : "Send Inquiry"}
               </button>

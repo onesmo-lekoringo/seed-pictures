@@ -5,9 +5,9 @@ import { Menu, X } from "lucide-react";
 
 const links = [
   { label: "Home", href: "#" },
-  { label: "About Us", href: "/about" },
   { label: "Projects", href: "#portfolio" },
-  { label: "Gallery", href: "/gallery" },
+  { label: "The Academy", href: "/academy" },
+  { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -64,13 +64,13 @@ const PillNav = () => {
             className="fixed top-6 inset-x-0 mx-auto w-fit z-50"
           >
             {/* Desktop pill */}
-            <div className="hidden md:flex items-center gap-1 rounded-full border border-border bg-card/80 backdrop-blur-xl px-2 py-2 shadow-lg shadow-background/50">
+            <div className="hidden md:flex items-center gap-1 rounded-full border border-[#C5A028]/20 bg-[#0B1838]/90 backdrop-blur-xl px-2 py-2 shadow-lg shadow-[#0B1838]/50">
               {links.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   onClick={handleClick(link.href)}
-                  className="px-5 py-2 rounded-full text-sm font-medium text-muted-foreground hover:text-primary hover:bg-secondary transition-all duration-200"
+                  className="px-5 py-2 rounded-full text-sm font-medium text-white/70 hover:text-[#C5A028] hover:bg-[#C5A028]/10 transition-all duration-200"
                 >
                   {link.label}
                 </a>
@@ -81,7 +81,7 @@ const PillNav = () => {
             <div className="md:hidden flex justify-center">
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="flex items-center gap-2 rounded-full border border-border bg-card/80 backdrop-blur-xl px-4 py-3 shadow-lg shadow-background/50 text-primary"
+                className="flex items-center gap-2 rounded-full border border-[#C5A028]/20 bg-[#0B1838]/90 backdrop-blur-xl px-4 py-3 shadow-lg text-[#C5A028]"
                 aria-label="Toggle menu"
               >
                 <Menu className="w-5 h-5" />
@@ -100,11 +100,11 @@ const PillNav = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-md flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 z-[60] bg-[#0B1838]/97 backdrop-blur-md flex flex-col items-center justify-center gap-8"
           >
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-6 right-6 p-2 text-primary"
+              className="absolute top-6 right-6 p-2 text-[#C5A028]"
               aria-label="Close menu"
             >
               <X className="w-6 h-6" />
@@ -117,7 +117,7 @@ const PillNav = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
                 onClick={(e) => { e.preventDefault(); doNavigate(link.href); }}
-                className="font-display text-2xl font-semibold text-primary hover:text-accent transition-colors"
+                className="font-display text-2xl font-semibold text-white hover:text-[#C5A028] transition-colors"
               >
                 {link.label}
               </motion.a>
